@@ -1,1 +1,16 @@
-tipo:Snack,nombre:Papas de sal,marca:Sabritas,precio:17.5,cantidad:5,clave:A2
+A1,Chocolate,Kinder Delice,24,2,Dulce
+A2,Papas de sal,Sabritas,17,5,Botana
+A3,Coca,Coca-Cola,19,3,Refresco
+A4,Agua Natural,Ciel,10,6,Agua
+B1,Boing-Mango,Pascual,8,23,Jugo
+B2,Barrita-Fresa,AllBran,14,7,Snack
+B3,Muecas,Lucas,8,13,Dulce
+B4,Takis-Fuego,Barcel,18,4,Botana
+C1,Sprite,Coca-Cola,19,11,Refresco
+C2,Agua Mineral,Peñafiel,16,3,Agua
+C3,DelValle-Critrico,DelValle,22,8,Jugo
+C4,Barrita-Fresa,AllBran,14,7,Snack
+D1,Paleta-Tutsi,TutsiPop,5,20,Dulce
+D2,Donitas-Espolvoreadas,Bimbo,21,14,Snack
+D3,Agua Clorada,Pumagua,0,10,Agua
+D4,Toreadas,Barcel,17,15,Botana
