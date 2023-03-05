@@ -1,15 +1,8 @@
 from Productos import *
-<<<<<<< HEAD
-
-
-#funcion main
-while(1):
-    print("-------BIENVENIDO A LA EXPENDEDORA------\n\
-¿Que desea hacer?\n1.Comprar(Usuario).\n2.Ingresar como administrador.\n3.Apagar.")
-=======
 from Persona import *
 import os
 import pickle
+
 #funcion main
 while(1):
     print("-------BIENVENIDO A LA EXPENDEDORA------\n",
@@ -17,7 +10,6 @@ while(1):
     "1.Comprar(Usuario).\n",
     "2.Ingresar como administrador.\n",
     "3.Apagar.")
->>>>>>> 4e35af4 (Modificaciones Joel)
     opcion=int(input("Ingresa tu opcion: "))
     if(opcion==1):
         listAux=[]
@@ -45,13 +37,10 @@ while(1):
 
 
     elif(opcion==2):
-<<<<<<< HEAD
-        print("Bienvenido. Ingrese la contraseña para continuar: ")
         #funciones de administrador
         #Ejemplos, ver cuanto dinero tiene la maquina
         #conteo de las ventas
         #agregar/eliminar productos
-=======
         contraseña=int(input("Bienvenido. Ingrese la contraseña para continuar: "))
         a=0
         with open('admin.txt') as f:
@@ -101,7 +90,6 @@ while(1):
                 Adminxd.SacarDinero()
         else:
             print('No autorizado')
->>>>>>> 4e35af4 (Modificaciones Joel)
 
     elif(opcion==3):
         print("APAGANDO...")
