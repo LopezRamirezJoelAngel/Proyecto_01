@@ -32,13 +32,14 @@ class Administrador(Persona):
         self.nombre=nombre
     #
     def quitarProducto(self,listaxd):
+        print(listaxd)
         x=int(input('Que producto deseas quitar?: '))
         x=x-1
         return listaxd.remove(x)
     
 #Clase que agrega o aumenta la cantidad de productos hasta un limite de 16
     def ModificarProducto(self,listaxd):
-        op=int(input('Deseas agregar o aumentar productos?: '))
+        op=int(input('Deseas 1. agregar o 2. aumentar productos?: '))
 #método para llenar de un producto la maquina, recibe sus 5 atributos base y seleciona el tipo
         if op == 1:
             if listaxd.tamaño<15:
@@ -74,6 +75,7 @@ class Administrador(Persona):
                 print('La expendedora esta en su limite')
 #Aumenta la cantidad de un producto en la maquina
         elif op == 2:
+            print(listaxd)
             y=int(input('Que producto deseas aumentar?'))
             produc=listaxd.get(y)
             cant=int(input('Cuantos productos vas aumentar?'))
@@ -98,38 +100,52 @@ class Administrador(Persona):
             wrt.close()
         else:
             print('Nos dejaras en banca rota')
+    def Comprar(self:object,ListaCircularDoble:object):
+        pass
 
 class Usuario(Persona):
     '''La clase usuario hereda de Persona el método de comprar, donde hace
     una validación de ingreso de costos en la moneda Mexicana. Verifica que
     alcance el dineo para el producto seleccionado y regresa cambio. 
-
     Tiene los mismos atributos, la clave(str) del producto y un nombre(str).
     '''
-    def __init__(self,clave: int,nombre: str):
-        super().__init__(clave,nombre)
-
-    def Comprar(self,listaxd):
-        x=str(input('Clave del producto'))
-        produc=listaxd.get(x)
+    def __init__(self:object,clave:str,nombre:str,):
+        self.clave=clave
+        self.nombre=nombre
+    
+    def Comprar(self,listaxd: ListaCircularDoble):
+        produc=listaxd.get(self.clave)
+        print(produc.valor)
         sumapesos=0
         y=0
-        while(sumapesos!=1):
+        while(sumapesos==0):
             m=int(input('ingresa tu dinero'))
             y=y+m
             sumapesos=int(input('Seguir ingresando dinero?: 0.SI 1.NO'))
-        if y > produc.precio and produc.cantidad!=0:
-            cambio =y- produc.precio
-            produc.cantidad = produc.cantidad-1
-            listaxd.update(x,produc)
+        ProductoAux=produc.valor
+        if y > ProductoAux.precio and ProductoAux.cantidad!=0:
+            cambio =y- ProductoAux.precio
+            ProductoAux.cantidad = ProductoAux.cantidad-1
+            produc.valor=ProductoAux
+            listaxd.update(self.clave,produc.valor)
+            print(ProductoAux.precio)
+            print(listaxd)
+            dinerillo=0
             with open('dinero.txt') as f:
                 lineas= f.readlines()
                 for line in lineas:
                     dinerillo=float(line.rstrip())
-                    dinerillo = y+ produc.precio - cambio
+                    print(dinerillo)
+                    dinerillo = dinerillo+y+ ProductoAux.precio - cambio
                     break
             wrt= open("dinero.txt", "w")
-            wrt.write(dinerillo)
+            wrt.write(str(dinerillo))
             wrt.close()
         else:
             print('No te alcanza')
+
+    def ModificarProducto(self:object,ListaCircularDoble:object):
+        pass
+
+    def SacarDinero(self):
+        pass

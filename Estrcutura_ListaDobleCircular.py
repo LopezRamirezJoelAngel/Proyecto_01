@@ -1,16 +1,17 @@
 from Productos import *
 class ListaCircularDoble:
+    """ Esta clase contiene una clase dentro de si misma que simulara un nodo de cualquier tipo es decir que esta lista puede
+    ser de cualquier tipo gracias a la flexibilidad de python por lo tanto no hay que asignar el tipo de dato que sera valor """
     class _Nodo:
         def __init__(self, valor):
             self.valor = valor
-            self.nodo_anterior = None
             self.nodo_siguiente = None
     def __init__(self):
         self.cabeza = None
         self.cola = None
         self.tamaño = 0
     def __str__(self):
-        # Muestra los elementos de la lista doblemnte ligada circular
+        # Muestra los elementos 
         array = []
         nodo_actual = self.cabeza
         pivote = True
@@ -21,8 +22,8 @@ class ListaCircularDoble:
                 array.append(nodo_actual.valor)
                 nodo_actual = nodo_actual.nodo_siguiente
                 pivote = False
-                contador -=1 
-                print(array[i])
+                contador -= 1
+                print((i+1),array[i])
                 i=i+1
             else:
                 break
@@ -39,7 +40,7 @@ class ListaCircularDoble:
             self.cabeza = nuevo_nodo
         self.tamaño += 1
     def append(self, valor):
-        # Agrega un elemento al final
+        # Agrega un elemento al final 
         nuevo_nodo = self._Nodo(valor)
         if self.cabeza == None and self.cola == None:
             self.cabeza = nuevo_nodo
@@ -50,7 +51,7 @@ class ListaCircularDoble:
             self.cola = nuevo_nodo
         self.tamaño += 1
     def shift(self):
-        # Saca el primer elemento
+        # Saca el primer elemento 
         if self.tamaño == 0:
             self.cabeza = None
             self.cola = None
@@ -93,13 +94,6 @@ class ListaCircularDoble:
             return nodo_actual
         else:
             return None
-    def update(self,indice, valor):
-        # Cambia el valor de un nodo dado un indice
-        nodo_objetivo = self.get(indice)
-        if nodo_objetivo != None:
-            nodo_objetivo.valor = valor
-        else:
-            return None
     def insert(self, indice, valor):
         # Agrega un elemento dado el indice
         if indice == self.tamaño - 1:
@@ -126,5 +120,12 @@ class ListaCircularDoble:
             nodo_removido.nodo_siguiente = None
             self.tamaño -= 1
             return nodo_removido
+        else:
+            return None
+    def update(self,indice, valor):
+        # Cambia el valor de un nodo dado un indice
+        nodo_objetivo = self.get(indice)
+        if nodo_objetivo != None:
+            nodo_objetivo.valor = valor
         else:
             return None
