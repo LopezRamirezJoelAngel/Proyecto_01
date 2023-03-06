@@ -17,7 +17,6 @@ Al ser admin la contraseña es:
 ```
 123456
 ```
-End with an example of getting some data out of the system or using it for a little demo
 
 ## Autores ✒️
 
