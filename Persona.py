@@ -2,9 +2,37 @@ from Estrcutura_ListaDobleCircular import *
 from Productos import *
 from abc import ABC, abstractmethod
 
+#numeros menu
+def ingresaNumero(a:str):
+    try:
+        opcion=int(input(a))
+    except:
+        print('solo se ingresa numeros')
+        opcion=ingresaNumero(a)
+    else:
+        print('Dato correcto')
+    return opcion 
+
+#str
+def ingresaFloat(b:str):
+    try:
+        opcion=float(input(b))
+    except:
+        print('solo se ingresa numeros con o sin decimales')
+        opcion=ingresaNumero(b)
+    else:
+        print('Dato correcto')
+    return opcion 
+
+
+
+
+
+
+
 class Persona(ABC):
     '''La clase persona es una clase abstracta que define los métodos
-    de lo que puede ser un administrador o usuario normal que realizara 
+    de lo que puede ser un administrador o usuario normal que realizara
     las tareas de modificar, sacar dinero o comprar.
     '''
     @abstractmethod
@@ -21,7 +49,7 @@ class Persona(ABC):
 
 class Administrador(Persona):
 
-    """La clase Administrador se encarga de agregar y eliminar productos de nuestro carrito de compra, 
+    """La clase Administrador se encarga de agregar y eliminar productos de nuestro carrito de compra,
     también de debitar las trasacciones.
     Tiene como atributos la clave(str) y el nombre del admin (str).
     Analiza el dinero disponible en nuestra cuenta y perimte sacar el dinero siempre y cuando deje algo
@@ -33,24 +61,24 @@ class Administrador(Persona):
     #
     def quitarProducto(self,listaxd):
         print(listaxd)
-        x=int(input('Que producto deseas quitar?: '))
+        x=ingresaNumero("Que producto deseas quitar?: ")
         x=x-1
         return listaxd.remove(x)
-    
+
 #Clase que agrega o aumenta la cantidad de productos hasta un limite de 16
     def ModificarProducto(self,listaxd):
-        op=int(input('Deseas 1. agregar o 2. aumentar productos?: '))
+        op=ingresaNumero("Deseas 1. agregar o 2. aumentar productos?: ")
 #método para llenar de un producto la maquina, recibe sus 5 atributos base y seleciona el tipo
         if op == 1:
             if listaxd.tamaño<15:
                 a=str(input('Clave del producto: '))
                 b=str(input('Nombre del producto: '))
                 c=str(input('Marca del producto: '))
-                d=float(input('Precio del producto: '))
-                e=int(input('Cantidad: '))
+                d=ingresaFloat("Precio del producto: ")
+                e=ingresaNumero("Cantidad: ")
 
                 print("1.Snack \n2.Jugo \n3.Refresco \n4.Agua \n5.Dulce \n6.Botana")
-                var=int(input('Elige el tipo de producto de los 6 existentes: '))
+                var=ingresaNumero("Elige el tipo de producto de los 6 existentes: ")
                 if var == 1:
                     p1=Snack(a,b,c,d,e,'Snack')
                     listaxd.append(p1)
@@ -76,16 +104,18 @@ class Administrador(Persona):
 #Aumenta la cantidad de un producto en la maquina
         elif op == 2:
             print(listaxd)
-            y=int(input('Que producto deseas aumentar?'))
-            produc=listaxd.get(y)
-            cant=int(input('Cuantos productos vas aumentar?'))
-            produc.cantidad=produc.cantidad+cant
-            listaxd.update(y,produc)
+            y=ingresaNumero("Que producto deseas aumentar?: ")
+            produc=listaxd.get((y-1))
+            ProductoAux=produc.valor
+            cant=ingresaNumero("Cuantos productos vas aumentar?: ")
+            ProductoAux.cantidad=ProductoAux.cantidad+cant
+            produc.valor=ProductoAux
+            listaxd.update((y-1),produc.valor)
         else:
             print('NO VALIDA')
 #Metodo para leer el dinero que se almacena despues de las compras, lo muestra y saca cuando es
     def SacarDinero(self):
-        x=float(input('Cuanto dinero vas a sacar?: '))
+        x=ingresaFloat("Cuanto dinero vas a sacar?: ")
         with open('dinero.txt') as f:
                 lineas= f.readlines()
                 for line in lineas:
@@ -106,22 +136,22 @@ class Administrador(Persona):
 class Usuario(Persona):
     '''La clase usuario hereda de Persona el método de comprar, donde hace
     una validación de ingreso de costos en la moneda Mexicana. Verifica que
-    alcance el dineo para el producto seleccionado y regresa cambio. 
+    alcance el dineo para el producto seleccionado y regresa cambio.
     Tiene los mismos atributos, la clave(str) del producto y un nombre(str).
     '''
     def __init__(self:object,clave:str,nombre:str,):
         self.clave=clave
         self.nombre=nombre
-    
+
     def Comprar(self,listaxd: ListaCircularDoble):
         produc=listaxd.get(self.clave)
         print(produc.valor)
         sumapesos=0
         y=0
         while(sumapesos==0):
-            m=int(input('ingresa tu dinero'))
+            m=ingresaNumero("ingresa tu dinero: ")
             y=y+m
-            sumapesos=int(input('Seguir ingresando dinero?: 0.SI 1.NO'))
+            sumapesos=ingresaNumero("Seguir ingresando dinero?: 0.SI 1.NO: ")
         ProductoAux=produc.valor
         if y > ProductoAux.precio and ProductoAux.cantidad!=0:
             cambio =y- ProductoAux.precio
@@ -135,12 +165,12 @@ class Usuario(Persona):
                 lineas= f.readlines()
                 for line in lineas:
                     dinerillo=float(line.rstrip())
-                    print(dinerillo)
-                    dinerillo = dinerillo+y+ ProductoAux.precio - cambio
+                    dinerillo = dinerillo+y-cambio
                     break
             wrt= open("dinero.txt", "w")
             wrt.write(str(dinerillo))
             wrt.close()
+            print('Cambio: ',cambio)
         else:
             print('No te alcanza')
 
